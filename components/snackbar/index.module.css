@@ -1,0 +1,31 @@
+.snackbar {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1.5rem;
+  z-index: 1;
+  transition: 0.5s;
+  direction: rtl;
+}
+.snackbar.show {
+  /* visibility: visible; */
+  bottom: 3%;
+}
+.snackbar.hide {
+  /* visibility: hidden; */
+  bottom: -50%;
+}
+
+.snackbar__icon {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.snackbar__msg {
+  font-weight: bold;
+}

@@ -1,0 +1,125 @@
+.about {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  direction: rtl;
+  padding: 3rem 1rem;
+  background-color: var(--second-clr);
+}
+.about__container {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.about__container__top,
+.about__item {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.about__title {
+  text-align: center;
+  font-size: 2.8rem;
+  padding-top: 3rem;
+}
+
+/* Tabs */
+.about__tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 4rem;
+}
+.about__tab {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 1rem;
+  color: lightgray;
+  padding: 1rem 3rem;
+  border-radius: 40px;
+  cursor: pointer;
+}
+.about__tab__active {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+/* Slider */
+.about__img {
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.about__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  flex: 2;
+}
+.about__item__container {
+  max-width: 900px;
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+.about__item__title {
+  font-size: 2.4rem;
+}
+.about__item__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.about__item__text {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .about__container {
+    justify-content: space-evenly;
+  }
+  .about__title {
+    font-size: 2rem;
+    margin-top: 0;
+  }
+  .about__item__title {
+    font-size: 1.6rem;
+  }
+  .about__item__text {
+    font-size: 1rem;
+  }
+  .about__tabs {
+    gap: 2rem;
+    padding: 0;
+  }
+  .about__tab {
+    padding: 0.4rem 1rem;
+  }
+  .about__item {
+    flex-direction: column;
+    gap: 0;
+    margin-top: 0;
+  }
+  .about__item__container {
+    flex-direction: column;
+  }
+}

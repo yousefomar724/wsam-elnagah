@@ -1,0 +1,80 @@
+.place__bg {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  /* background-image: url('/sea1.jpeg'); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  direction: rtl;
+}
+.place__bg img {
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+}
+.place__bg h1 {
+  color: lightgray;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  text-align: center;
+}
+
+.place__grid {
+  direction: rtl;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: min(1200px, 100%);
+  margin: 3rem auto;
+  padding: 0 1rem;
+  gap: 1rem;
+}
+.place__card {
+  width: 240px;
+  height: 250px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+.place__card:hover .place__card__img {
+  transform: scale(1.1);
+}
+.place__card__img {
+  transition: 0.2s;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.place__card h3 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 1.5rem;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .place__bg h1 {
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,147 @@
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.hero__swiper {
+  width: 100%;
+  height: 100%;
+}
+.hero__img {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  position: relative;
+}
+.hero__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  direction: rtl;
+  background: rgba(0, 0, 0, 0.5);
+}
+.hero__container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 1.5rem;
+}
+.hero__title {
+  font-size: 2rem;
+  width: 50%;
+  padding-top: 3rem;
+}
+/* Swiper */
+.swiper__pagination {
+  color: white;
+  position: absolute;
+  font-size: 1.2rem;
+  z-index: 1;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.swiper__prev,
+.swiper__next {
+  position: absolute;
+  bottom: 80px;
+  width: 80px;
+  height: 80px;
+  z-index: 1;
+  cursor: pointer;
+  color: white;
+}
+.swiper__next {
+  right: 38%;
+}
+.swiper__prev {
+  left: 38%;
+}
+.swiper__next img {
+  transform: rotate(180deg);
+}
+.swiper__next img,
+.swiper__prev img {
+  height: 100%;
+  color: #636c70;
+  width: 100%;
+  transition: 0.3s;
+  opacity: 0.5;
+}
+.swiper__next img:hover {
+  transform: translateX(5px) rotate(180deg);
+  opacity: 1;
+}
+.swiper__prev img:hover {
+  transform: translateX(-5px);
+  opacity: 1;
+}
+
+@media (max-width: 1050px) {
+  .hero__container {
+    max-width: 800px;
+  }
+  .hero__title {
+    font-size: 2rem;
+    width: 80%;
+    padding-top: 0;
+  }
+  .hero__btn span {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .swiper__prev,
+  .swiper__next {
+    width: 60px;
+    height: 60px;
+  }
+  .swiper__pagination {
+    bottom: 90px;
+  }
+}
+@media (max-width: 768px) {
+  .hero__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .hero__title {
+    font-size: 1.5rem;
+    width: 100%;
+  }
+  .swiper__prev,
+  .swiper__next {
+    width: 50px;
+    height: 50px;
+    bottom: 50px;
+  }
+  .swiper__pagination {
+    bottom: 55px;
+  }
+  .swiper__next {
+    right: 30%;
+  }
+  .swiper__prev {
+    left: 30%;
+  }
+}
+@media (max-width: 580px) {
+  .swiper__next {
+    right: 25%;
+  }
+  .swiper__prev {
+    left: 25%;
+  }
+}

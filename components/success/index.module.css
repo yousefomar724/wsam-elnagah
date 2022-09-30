@@ -1,0 +1,213 @@
+.success {
+  direction: rtl;
+  position: relative;
+}
+.success__container {
+  color: white;
+  display: flex;
+}
+.success__content {
+  position: relative;
+  width: 100%;
+  flex: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.success__top {
+  background-color: var(--second-clr);
+  width: 100%;
+  flex: 3;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.success__title {
+  font-size: 2.5rem;
+  width: 55%;
+  text-align: right;
+  padding-right: 8rem;
+}
+.success__tabs {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4.4rem;
+  margin: 1rem 8rem 0 20rem;
+}
+.success__tab {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 2rem;
+  color: rgb(136, 133, 133);
+  padding-right: 0;
+  font-weight: bold;
+  transition: 0.2s;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+.success__tab__active {
+  color: white;
+  position: relative;
+  padding-right: 1rem;
+}
+.success__tab__active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -140px;
+  transform: translateY(-50%);
+  width: 70px;
+  height: 4px;
+  background-color: white;
+  border-radius: 20px;
+}
+.success__content__container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.success__img {
+  object-fit: cover;
+  object-position: center;
+  position: relative;
+  width: 100%;
+  height: 130vh;
+  z-index: -1;
+}
+.success__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.success__item__container {
+  max-width: 700px;
+  padding: 0 1rem;
+  margin: 0 0 0 auto;
+}
+.success__item__title {
+  font-size: 2.4rem;
+  margin: 1rem;
+}
+.success__item__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.success__item__text {
+  font-size: 1rem;
+  line-height: 2;
+}
+.success__item__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.success__item__icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--first-clr);
+  color: var(--first-clr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.view__all {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0 11rem 0 0;
+  width: fit-content;
+  border-bottom: 2px solid white;
+  padding-bottom: 0.2rem;
+  color: white;
+  font-size: 0.8rem;
+  position: relative;
+}
+@media (max-width: 1200px) {
+  .success__container {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .success__content {
+    flex: none;
+  }
+  .success__title {
+    text-align: center;
+    width: 100%;
+    padding: 0;
+  }
+  .success__top {
+    background-color: var(--second-clr);
+    width: 100%;
+    height: 100%;
+    padding: 1rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .success__tabs {
+    flex-direction: row;
+    padding: 0;
+    gap: 1.6rem;
+    margin: 2rem 0 0;
+  }
+  .success__tab {
+    font-size: 1.4rem;
+    padding: 0 0 0.2rem 0;
+    letter-spacing: 0;
+  }
+  .success__tab__active {
+    color: white;
+    border-bottom: 2px solid white;
+  }
+  .success__tab__active::after {
+    display: none;
+  }
+  .success__img {
+    height: calc(100vh - 6rem);
+  }
+  .view__all {
+    bottom: -45px;
+    padding: 1rem 0;
+    margin: 0 auto;
+    position: absolute;
+    justify-content: center;
+    width: 100%;
+    background-color: var(--second-clr);
+    font-size: 0.7rem;
+  }
+  .view__all::after {
+    content: '';
+    position: absolute;
+    width: 135px;
+    bottom: 0.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom: 1px solid white;
+  }
+}
+@media (max-width: 768px) {
+  .success__title {
+    font-size: 1.6rem;
+  }
+  .success__tab {
+    font-size: 1.1rem;
+  }
+}

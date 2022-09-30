@@ -1,0 +1,358 @@
+.tripes {
+  direction: rtl;
+  margin: 6rem 0 4rem;
+  position: relative;
+}
+.tripes__container {
+  display: flex;
+}
+.tripes__title {
+  font-size: 3rem;
+  text-align: center;
+  color: #5e6568;
+  margin-bottom: 5rem;
+}
+.tripes__tabs {
+  flex: 2;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 4.2rem;
+  padding-right: 2rem;
+}
+.tripes__tabs::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  top: -6rem;
+  bottom: -4rem;
+  right: 21rem;
+  opacity: 0.5;
+  background-color: lightgray;
+}
+.tripes__tab {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 1.6rem;
+  color: #5e6568;
+  font-weight: bold;
+  transition: 0.2s;
+  cursor: pointer;
+  font-weight: bold;
+}
+.tripes__tab__active {
+  color: var(--second-clr);
+  position: relative;
+  padding-right: 1.5rem;
+}
+.tripes__tab__active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -120px;
+  transform: translateY(-50%);
+  width: 70px;
+  height: 4px;
+  background-color: var(--second-clr);
+  border-radius: 10px;
+  z-index: 1;
+  border-top: 20px solid white;
+  border-bottom: 20px solid white;
+}
+.tripes__content {
+  flex: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: static;
+  padding: 10px 0;
+}
+.tripes__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.tripes__item__title {
+  font-size: 2.4rem;
+}
+.tripes__item__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.tripes__item__text {
+  font-size: 1.2rem;
+}
+.tripes__item__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tripes__item__icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--first-clr);
+  color: var(--first-clr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.view__all {
+  position: absolute;
+  top: -3rem;
+  right: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4rem auto 0 4rem;
+  font-size: 0.8rem;
+  width: fit-content;
+  border-bottom: 2px solid var(--second-clr);
+  color: var(--second-clr);
+  font-weight: bolder;
+}
+
+@media (max-width: 1200px) {
+  .tripes__container {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .tripes__content {
+    flex: none;
+    width: 100%;
+  }
+  .tripes__title {
+    text-align: center;
+    width: 100%;
+    font-size: 2.5rem;
+  }
+  .tripes__tabs {
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+  .tripes__tabs::after {
+    display: none;
+  }
+  .tripes__tab {
+    font-size: 1.1rem;
+    padding: 0.2rem;
+  }
+  .tripes__tab__active {
+    border-bottom: 2px solid var(--second-clr);
+    border-radius: 0;
+    padding: 0.2rem;
+  }
+  .tripes__tab__active::after {
+    display: none;
+  }
+}
+
+/* tripes Card */
+.card {
+  position: relative;
+  height: 400px;
+  width: 300px;
+  cursor: pointer;
+}
+.card__container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
+  border-radius: 20px;
+  box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;
+  height: 100%;
+}
+.card__container:hover {
+  transform: rotateY(180deg);
+}
+.card__front {
+  border-radius: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  height: 100%;
+  z-index: -1;
+}
+.card__front__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}
+.card__front__content h3 {
+  font-size: 1.5rem;
+  text-align: center;
+}
+.card__front span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card__front span svg {
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--first-clr);
+  width: 20px;
+  height: 20px;
+  color: var(--first-clr);
+}
+.card__back {
+  border-radius: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-color: white;
+  color: #222;
+  transform: rotateY(180deg);
+}
+.card__back__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 400px;
+  padding: 1rem 1rem 2rem;
+  cursor: default;
+  box-sizing: border-box;
+}
+.card__back__content img {
+  margin-top: 1rem;
+}
+.card__back__content h3 {
+  font-size: 1.6rem;
+  text-align: center;
+  width: 100%;
+}
+.card__back__content p {
+  margin: 0;
+}
+.card__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  align-self: flex-end;
+}
+
+@media (min-width: 1200px) {
+  .card {
+    height: 450px;
+  }
+  .programs__slider {
+    height: 500px;
+  }
+}
+@media (max-width: 1200px) {
+  .card__back__content {
+    height: 100%;
+  }
+  .view__all {
+    position: static;
+    margin: 4rem auto 0 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tripes__title {
+    font-size: 1.8rem;
+    text-align: center;
+    color: #b4bdc1;
+    margin-bottom: 3rem;
+  }
+  .tripes__tabs {
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+    padding: 0;
+  }
+  .tripes__tab {
+    font-size: 0.8rem;
+  }
+  .view__all {
+    margin: 4rem auto 0;
+    font-size: 0.9rem;
+    position: static;
+  }
+}
+
+/* Swiper */
+.swiper__prev,
+.swiper__next {
+  position: absolute;
+  bottom: 60px;
+  width: 50px;
+  height: 50px;
+  z-index: 1;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.swiper__next {
+  right: 70px;
+}
+.swiper__prev {
+  right: 180px;
+}
+.swiper__next img,
+.swiper__prev img {
+  height: 100%;
+  color: #636c70;
+  width: 100%;
+  transition: 0.3s;
+  opacity: 0.5;
+}
+.swiper__next img:hover {
+  transform: translateX(5px);
+  opacity: 1;
+}
+.swiper__prev img:hover {
+  transform: translateX(-5px);
+  opacity: 1;
+}
+
+@media (max-width: 1200px) {
+  .swiper__prev,
+  .swiper__next {
+    left: 0;
+    margin: auto;
+    bottom: -30px;
+    width: 60px;
+    height: 60px;
+  }
+  .swiper__next {
+    right: -100px;
+  }
+  .swiper__prev {
+    right: 100px;
+  }
+  .tripes__tabs {
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .swiper__next {
+    right: -200px;
+  }
+  .swiper__prev {
+    right: 200px;
+  }
+}
