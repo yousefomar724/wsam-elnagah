@@ -19,86 +19,86 @@ import { MdLocationOn } from 'react-icons/md'
 import Link from 'next/link'
 import Head from 'next/head'
 import ScrollDown from '../../../../../components/scrollDown'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Snackbar from '../../../../../components/snackbar'
 
-// export const getStaticProps = async (context) => {
-//   const { details: detailsId, categoryId, place } = context.params
-//   const response = await fetch(
-//     `https://elnagahtravels.com/backend/public/api/programs/${detailsId}`
-//   )
-//   const { program = {} } = await response.json()
+export const getStaticProps = async ({ params }) => {
+  try {
+    // Get Progarams
+    const [response, settingsRes, countriesRes] = await Promise.all([
+      fetch(
+        `https://elnagahtravels.com/backend/public/api/programs_details/${params.details}`
+      ),
+      fetch(`https://elnagahtravels.com/backend/public/api/settings`),
+      fetch(
+        'https://elnagahtravels.com/backend/public/api/countries?country_for=programs'
+      ),
+    ])
+    const [{ program = {} }, { settings = {} }, { countries = [] }] =
+      await Promise.all([
+        response.json(),
+        settingsRes.json(),
+        countriesRes.json(),
+      ])
 
-//   // Get Progarams
-//   const countryRes = await fetch(
-//     `https://elnagahtravels.com/backend/public/api/countries`
-//   )
-//   const { countries = [] } = await countryRes.json()
-//   const countryId = countries.find((country) => country.name === place)?.id
+    const progRes = await fetch(
+      `https://elnagahtravels.com/backend/public/api/programs?country_id=${params.place}&category_id=${params.categoryId}`
+    )
+    const { programs = [] } = await progRes.json()
+    return {
+      props: { program, programs, countries, settings },
+      revalidate: 60,
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-//   const progRes = await fetch(
-//     `https://elnagahtravels.com/backend/public/api/programs?country_id=${countryId}&category_id=${categoryId}`
-//   )
-//   const { programs = [] } = await progRes.json()
+export const getStaticPaths = async () => {
+  // Get Country Names
+  const counRes = await fetch(
+    'https://elnagahtravels.com/backend/public/api/countries?country_for=programs'
+  )
+  const { countries = [] } = await counRes.json()
+  const countryIds = countries.map((country) => country.id)
 
-//   return {
-//     props: {
-//       program,
-//       programs,
-//     },
-//   }
-// }
+  // Get Category Ids
+  const catRes = await fetch(
+    'https://elnagahtravels.com/backend/public/api/categories'
+  )
+  const { categories = [] } = await catRes.json()
+  const categoryIds = categories.map((cat) => cat.id)
 
-// export const getStaticPaths = async () => {
-//   // Get Country Names
-//   const counRes = await fetch(
-//     'https://elnagahtravels.com/backend/public/api/countries'
-//   )
-//   const { countries = [] } = await counRes.json()
-//   const countryNames = countries.map((country) => country.name)
+  // Get Program Ids
+  const progRes = await fetch(
+    `https://elnagahtravels.com/backend/public/api/programs?country_id=1&category_id=1`
+  )
+  const { programs = [] } = await progRes.json()
+  const programIds = programs.map((prog) => prog.id)
 
-//   // Get Category Ids
-//   const catRes = await fetch(
-//     'https://elnagahtravels.com/backend/public/api/categories'
-//   )
-//   const { categories = [] } = await catRes.json()
-//   const categoryIds = categories.map((cat) => cat.id)
+  // Get all possible routes (paths)
+  const result = [countryIds, categoryIds, programIds]
+    .reduce((a, b) =>
+      a.reduce((r, v) => r.concat(b.map((w) => [].concat(v, w))), [])
+    )
+    .map(([place, categoryId, details]) => ({ place, categoryId, details }))
 
-//   // Get Program Ids
-//   const progRes = await fetch(
-//     'https://elnagahtravels.com/backend/public/api/programs?country_id=1&category_id=1'
-//   )
-//   const { programs = [] } = await progRes.json()
-//   const programIds = programs.map((prog) => prog.id)
+  const paths = result?.map((item) => ({
+    params: {
+      place: item.place.toString(),
+      categoryId: item.categoryId.toString(),
+      details: item.details.toString(),
+    },
+  }))
+  return {
+    paths,
+    fallback: 'blocking',
+  }
+}
 
-//   // Get all possible routes (paths)
-//   const result = [countryNames, categoryIds, programIds]
-//     .reduce((a, b) =>
-//       a.reduce((r, v) => r.concat(b.map((w) => [].concat(v, w))), [])
-//     )
-//     .map(([place, categoryId, details]) => ({ place, categoryId, details }))
-
-//   const paths = result?.map((item) => ({
-//     params: {
-//       place: item.place,
-//       categoryId: item.categoryId.toString(),
-//       details: item.details.toString(),
-//     },
-//   }))
-//   return {
-//     paths,
-//     fallback: false,
-//   }
-// }
-
-const Details = () => {
+const Details = ({ program, programs, countries, settings }) => {
   const router = useRouter()
-  const { details: detailsId, categoryId, place } = router.query
-
-  const [programs, setPrograms] = useState([])
-  const [program, setProgram] = useState({})
-  const [settings, setSettings] = useState({})
-  const [countries, setCountries] = useState([])
+  const { categoryId, place } = router.query
   const [snackbarMsg, setSnackbarMsg] = useState('')
   const snackbarRef = useRef(null)
   const [formErrors, setFormErrors] = useState({})
@@ -172,42 +172,8 @@ const Details = () => {
       console.log(error)
     }
   }
-  const fetchData = async () => {
-    try {
-      // Get Progarams
-      const [response, settingsRes, countriesRes] = await Promise.all([
-        fetch(
-          `https://elnagahtravels.com/backend/public/api/programs_details/${detailsId}`
-        ),
-        fetch(`https://elnagahtravels.com/backend/public/api/settings`),
-        fetch(
-          'https://elnagahtravels.com/backend/public/api/countries?country_for=programs'
-        ),
-      ])
-      const [{ program = {} }, { settings = {} }, { countries = [] }] =
-        await Promise.all([
-          response.json(),
-          settingsRes.json(),
-          countriesRes.json(),
-        ])
 
-      const progRes = await fetch(
-        `https://elnagahtravels.com/backend/public/api/programs?country_id=${place}&category_id=${categoryId}`
-      )
-      const { programs = [] } = await progRes.json()
-      setProgram(program)
-      setPrograms(programs)
-      setSettings(settings)
-      setCountries(countries)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  useEffect(() => {
-    fetchData()
-  }, [detailsId, place, categoryId])
   const country = countries?.find((country) => country?.id === +place)
-
   const message = (id) => {
     const program = programs?.find((p) => p?.id === id)
     return `شكرا لك علي تواصلك مع وكالة وسام النجاح للسفر والسياحة - الوجهة: ${program.title}, عدد الايام: ${program.days}, عدد الليالي: ${program.nights}, السعر بعد الخصم: ${program.price_after_discount}`
@@ -216,9 +182,7 @@ const Details = () => {
   return (
     <Layout>
       <Head>
-        <title>
-          {program?.category?.name} - {country?.name}
-        </title>
+        <title>{`${program?.category?.name} - ${country?.name}`}</title>
       </Head>
       <div className={styles.details__bg}>
         {program?.image && (
@@ -426,12 +390,12 @@ const Details = () => {
                         </span>
                         <span>
                           <MdLocationOn />
-                          {prog?.country}
+                          {prog?.country.name}
                         </span>
                       </div>
                       <div className={styles.similar__heading}>
                         <Link
-                          href={`/our-programs/${prog?.country}/${categoryId}/${prog?.id}`}
+                          href={`/our-programs/${place}/${categoryId}/${prog?.id}`}
                         >
                           <a>
                             <h3 className={styles.similar__card__title}>
@@ -465,7 +429,7 @@ const Details = () => {
                         <AnimatedBtn
                           text='تفاصيل العرض'
                           textColor='#222'
-                          url={`/our-programs/${prog?.country}/${categoryId}/${prog?.id}`}
+                          url={`/our-programs/${place}/${categoryId}/${prog?.id}`}
                         />
                         <AnimatedBtn
                           text='حجز العرض'

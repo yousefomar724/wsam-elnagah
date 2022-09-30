@@ -4,62 +4,47 @@ import Layout from '../../../components/layout'
 import Image from 'next/image'
 import Link from 'next/link'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
 
-// export const getStaticProps = async () => {
-//   const response = await fetch(
-//     'https://elnagahtravels.com/backend/public/api/categories'
-//   )
-//   const { categories = [] } = await response.json()
-//   return {
-//     props: {
-//       categories,
-//     },
-//   }
-// }
+export const getStaticProps = async ({ params }) => {
+  try {
+    const [response, countriesRes] = await Promise.all([
+      fetch(
+        `https://elnagahtravels.com/backend/public/api/programs/categories?country_id=${params.place}`
+      ),
+      fetch(
+        `https://elnagahtravels.com/backend/public/api/countries?country_for=programs`
+      ),
+    ])
+    const [{ categories = [] }, { countries = [] }] = await Promise.all([
+      response.json(),
+      countriesRes.json(),
+    ])
+    return {
+      props: { countries, categories },
+      revalidate: 60,
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-// export const getStaticPaths = async () => {
-//   const response = await fetch(
-//     'https://elnagahtravels.com/backend/public/api/countries'
-//   )
-//   const { countries = [] } = await response.json()
-//   const countrySlugs = countries?.map((country) => country.name)
-//   const paths = countrySlugs?.map((slug) => ({ params: { place: slug } }))
-//   return {
-//     paths,
-//     fallback: false,
-//   }
-// }
+export const getStaticPaths = async () => {
+  const response = await fetch(
+    'https://elnagahtravels.com/backend/public/api/countries'
+  )
+  const { countries = [] } = await response.json()
+  const countrySlugs = countries?.map((country) => country.name)
+  const paths = countrySlugs?.map((slug) => ({ params: { place: slug } }))
+  return {
+    paths,
+    fallback: 'blocking',
+  }
+}
 
-const Place = () => {
+const Place = ({ countries, categories }) => {
   const {
     query: { place },
   } = useRouter()
-  const [categories, setCategories] = useState([])
-  const [countries, setCountries] = useState([])
-  const fetchData = async () => {
-    try {
-      const [response, countriesRes] = await Promise.all([
-        fetch(
-          `https://elnagahtravels.com/backend/public/api/programs/categories?country_id=${place}`
-        ),
-        fetch(
-          `https://elnagahtravels.com/backend/public/api/countries?country_for=programs`
-        ),
-      ])
-      const [{ categories = [] }, { countries = [] }] = await Promise.all([
-        response.json(),
-        countriesRes.json(),
-      ])
-      setCategories(categories)
-      setCountries(countries)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  useEffect(() => {
-    fetchData()
-  }, [place])
   const country = countries?.find((country) => country?.id === +place)
   return (
     <Layout>
