@@ -42,9 +42,9 @@ const BookHotel = ({ hotels, settings, slide }) => {
         <title>حجز فندق</title>
       </Head>
       <FullPageSlider
-        data={slides}
-        title={slides[0]?.title}
-        btnText={slides[0]?.button_text}
+        data={slide}
+        title={slide[0]?.title}
+        btnText={slide[0]?.button_text}
         btnUrl={'#hotels'}
       />
       <Hotels hotels={hotels} settings={settings} />
