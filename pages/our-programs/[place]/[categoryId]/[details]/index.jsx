@@ -22,34 +22,6 @@ import ScrollDown from '../../../../../components/scrollDown'
 import { useRef, useState } from 'react'
 import Snackbar from '../../../../../components/snackbar'
 
-export const getStaticProps = async ({ params }) => {
-  // Get Progarams
-  const [response, settingsRes, countriesRes] = await Promise.all([
-    fetch(
-      `https://backend.elnagahtravels.com/api/programs_details/${params.details}`
-    ),
-    fetch(`https://backend.elnagahtravels.com/api/settings`),
-    fetch(
-      'https://backend.elnagahtravels.com/api/countries?country_for=programs'
-    ),
-  ])
-  const [{ program = {} }, { settings = {} }, { countries = [] }] =
-    await Promise.all([
-      response.json(),
-      settingsRes.json(),
-      countriesRes.json(),
-    ])
-
-  const progRes = await fetch(
-    `https://backend.elnagahtravels.com/api/programs?country_id=${params.place}&category_id=${params.categoryId}`
-  )
-  const { programs = [] } = await progRes.json()
-  return {
-    props: { program, programs, countries, settings },
-    revalidate: 60,
-  }
-}
-
 export const getStaticPaths = async () => {
   // Get Country Names
   const counRes = await fetch(
@@ -89,6 +61,34 @@ export const getStaticPaths = async () => {
   return {
     paths,
     fallback: 'blocking',
+  }
+}
+
+export const getStaticProps = async ({ params }) => {
+  // Get Progarams
+  const [response, settingsRes, countriesRes] = await Promise.all([
+    fetch(
+      `https://backend.elnagahtravels.com/api/programs_details/${params.details}`
+    ),
+    fetch(`https://backend.elnagahtravels.com/api/settings`),
+    fetch(
+      'https://backend.elnagahtravels.com/api/countries?country_for=programs'
+    ),
+  ])
+  const [{ program = {} }, { settings = {} }, { countries = [] }] =
+    await Promise.all([
+      response.json(),
+      settingsRes.json(),
+      countriesRes.json(),
+    ])
+
+  const progRes = await fetch(
+    `https://backend.elnagahtravels.com/api/programs?country_id=${params.place}&category_id=${params.categoryId}`
+  )
+  const { programs = [] } = await progRes.json()
+  return {
+    props: { program, programs, countries, settings },
+    revalidate: 60,
   }
 }
 

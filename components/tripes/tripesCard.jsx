@@ -35,9 +35,7 @@ const TripesCard = ({ item, settings }) => {
               <AnimatedBtn
                 text='تفاصيل البرنامج'
                 textColor='#07162d'
-                url={`/${
-                  item?.country_for === 'discounts' ? 'sales' : 'our-programs'
-                }/${item?.id}`}
+                url={`/our-programs/${item?.id}`}
               />
             </div>
           </div>

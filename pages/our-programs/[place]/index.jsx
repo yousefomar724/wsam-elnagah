@@ -5,6 +5,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Head from 'next/head'
 
+export const getStaticPaths = async () => {
+  const response = await fetch(
+    'https://backend.elnagahtravels.com/api/countries?country_for=programs'
+  )
+  const { countries = [] } = await response.json()
+  const countrySlugs = countries?.map((country) => country.id.toString())
+  const paths = countrySlugs?.map((slug) => ({ params: { place: slug } }))
+  return {
+    paths,
+    fallback: 'blocking',
+  }
+}
+
 export const getStaticProps = async ({ params }) => {
   const [response, countriesRes] = await Promise.all([
     fetch(
@@ -21,19 +34,6 @@ export const getStaticProps = async ({ params }) => {
   return {
     props: { countries, categories },
     revalidate: 60,
-  }
-}
-
-export const getStaticPaths = async () => {
-  const response = await fetch(
-    'https://backend.elnagahtravels.com/api/countries'
-  )
-  const { countries = [] } = await response.json()
-  const countrySlugs = countries?.map((country) => country.name)
-  const paths = countrySlugs?.map((slug) => ({ params: { place: slug } }))
-  return {
-    paths,
-    fallback: 'blocking',
   }
 }
 

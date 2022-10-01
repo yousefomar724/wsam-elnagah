@@ -1,6 +1,5 @@
 import Hero from '../components/hero'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 const Layout = dynamic(() => import('../components/layout'))
 const About = dynamic(() => import('../components/about'))

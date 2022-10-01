@@ -41,7 +41,7 @@ const OurPrograms = ({ slide, countries }) => {
         <div className={styles.programs__grid}>
           {countries &&
             countries?.reverse().map((country) => (
-              <Link href={`/our-programs/${country?.id}`} key={country?.id}>
+              <Link href={`/our-programs/${country.id}`} key={country.id}>
                 <div className={styles.programs__card}>
                   <Image
                     layout='fill'

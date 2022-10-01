@@ -16,11 +16,14 @@ export const getStaticPaths = async () => {
     'https://backend.elnagahtravels.com/api/countries?country_for=programs'
   )
   const { countries = [] } = await counRes.json()
-  const countryIds = countries.map((country) => country.id)
+  const countryIds = countries.map((country) => country.id.toString())
+  const countryPaths = countryIds?.map((id) => ({
+    params: { place: id.toString() },
+  }))
 
   // Get Category Ids
   const catRes = await fetch(
-    'https://backend.elnagahtravels.com/api/categories'
+    `https://backend.elnagahtravels.com/api/programs/categories?country_id=${countryPaths?.params?.place}`
   )
   const { categories = [] } = await catRes.json()
   const categoryIds = categories.map((cat) => cat.id)
