@@ -31,7 +31,6 @@ export const getStaticProps = async () => {
       settings,
       slide,
     },
-    revalidate: 60,
   }
 }
 
