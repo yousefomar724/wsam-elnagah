@@ -6,26 +6,22 @@ import { BsFillCircleFill } from 'react-icons/bs'
 import ScrollDown from '../../components/scrollDown'
 
 export const getStaticProps = async () => {
-  try {
-    const [aboutRes, slideRes] = await Promise.all([
-      fetch('https://elnagahtravels.com/backend/public/api/about'),
-      fetch('https://elnagahtravels.com/backend/public/api/slides?page=about'),
-    ])
-    const [
-      data = {},
-      {
-        data: { slide = [] },
-      },
-    ] = await Promise.all([aboutRes.json(), slideRes.json()])
-    return {
-      props: {
-        data,
-        slide,
-      },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [aboutRes, slideRes] = await Promise.all([
+    fetch('https://backend.elnagahtravels.com/api/about'),
+    fetch('https://backend.elnagahtravels.com/api/slides?page=about'),
+  ])
+  const [
+    data = {},
+    {
+      data: { slide = [] },
+    },
+  ] = await Promise.all([aboutRes.json(), slideRes.json()])
+  return {
+    props: {
+      data,
+      slide,
+    },
+    revalidate: 60,
   }
 }
 

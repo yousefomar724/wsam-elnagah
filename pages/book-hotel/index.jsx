@@ -5,33 +5,25 @@ import Head from 'next/head'
 import Hotels from '../../components/hotels'
 
 export const getStaticProps = async () => {
-  try {
-    const [hotelsRes, slideRes, settingsRes] = await Promise.all([
-      fetch('https://elnagahtravels.com/backend/public/api/hotels'),
-      fetch('https://elnagahtravels.com/backend/public/api/slides?page=hotels'),
-      fetch('https://elnagahtravels.com/backend/public/api/settings'),
-    ])
-    const [
-      { hotels = [] },
-      {
-        data: { slide = [] },
-      },
-      { settings = {} },
-    ] = await Promise.all([
-      hotelsRes.json(),
-      slideRes.json(),
-      settingsRes.json(),
-    ])
-    return {
-      props: {
-        hotels,
-        slide,
-        settings,
-      },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [hotelsRes, slideRes, settingsRes] = await Promise.all([
+    fetch('https://backend.elnagahtravels.com/api/hotels'),
+    fetch('https://backend.elnagahtravels.com/api/slides?page=hotels'),
+    fetch('https://backend.elnagahtravels.com/api/settings'),
+  ])
+  const [
+    { hotels = [] },
+    {
+      data: { slide = [] },
+    },
+    { settings = {} },
+  ] = await Promise.all([hotelsRes.json(), slideRes.json(), settingsRes.json()])
+  return {
+    props: {
+      hotels,
+      slide,
+      settings,
+    },
+    revalidate: 60,
   }
 }
 

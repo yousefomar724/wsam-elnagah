@@ -12,29 +12,18 @@ const Special = dynamic(() => import('../components/special'))
 const Programs = dynamic(() => import('../components/programs'))
 
 export const getStaticProps = async () => {
-  try {
-    const [mainRes, programsRes, settingsRes] = await Promise.all([
-      fetch('https://elnagahtravels.com/backend/public/api/index'),
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/countries?country_for=programs'
-      ),
-      fetch('https://elnagahtravels.com/backend/public/api/settings'),
-    ])
-    const [
-      data = {},
-      { countries: programsCountries = [] },
-      { settings = {} },
-    ] = await Promise.all([
-      mainRes.json(),
-      programsRes.json(),
-      settingsRes.json(),
-    ])
-    return {
-      props: { data, programsCountries, settings },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [mainRes, programsRes, settingsRes] = await Promise.all([
+    fetch('https://backend.elnagahtravels.com/api/index'),
+    fetch(
+      'https://backend.elnagahtravels.com/api/countries?country_for=programs'
+    ),
+    fetch('https://backend.elnagahtravels.com/api/settings'),
+  ])
+  const [data = {}, { countries: programsCountries = [] }, { settings = {} }] =
+    await Promise.all([mainRes.json(), programsRes.json(), settingsRes.json()])
+  return {
+    props: { data, programsCountries, settings },
+    revalidate: 60,
   }
 }
 

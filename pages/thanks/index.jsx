@@ -1,31 +1,24 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import Layout from '../../components/layout'
 import ScrollDown from '../../components/scrollDown'
 import Testimonials from '../../components/testimonials'
 import styles from './index.module.css'
 
 export const getStaticProps = async () => {
-  try {
-    const [reviewsRes, slidesRes] = await Promise.all([
-      fetch('https://elnagahtravels.com/backend/public/api/reviews'),
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/slides?page=reviews'
-      ),
-    ])
-    const [
-      { reviews = [] },
-      {
-        data: { slide = [] },
-      },
-    ] = await Promise.all([reviewsRes.json(), slidesRes.json()])
-    return {
-      props: { reviews, slide },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [reviewsRes, slidesRes] = await Promise.all([
+    fetch('https://backend.elnagahtravels.com/api/reviews'),
+    fetch('https://backend.elnagahtravels.com/api/slides?page=reviews'),
+  ])
+  const [
+    { reviews = [] },
+    {
+      data: { slide = [] },
+    },
+  ] = await Promise.all([reviewsRes.json(), slidesRes.json()])
+  return {
+    props: { reviews, slide },
+    revalidate: 60,
   }
 }
 

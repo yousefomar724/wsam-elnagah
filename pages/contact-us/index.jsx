@@ -20,28 +20,22 @@ import { useRef, useState } from 'react'
 import Snackbar from '../../components/snackbar'
 
 export const getStaticProps = async () => {
-  try {
-    const [response, settingsRes] = await Promise.all([
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/slides?page=contact_us'
-      ),
-      fetch('https://elnagahtravels.com/backend/public/api/settings'),
-    ])
-    const [
-      {
-        data: { slide = [] },
-      },
-      { settings = {} },
-    ] = await Promise.all([response.json(), settingsRes.json()])
-    return {
-      props: {
-        slide,
-        settings,
-      },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [response, settingsRes] = await Promise.all([
+    fetch('https://backend.elnagahtravels.com/api/slides?page=contact_us'),
+    fetch('https://backend.elnagahtravels.com/api/settings'),
+  ])
+  const [
+    {
+      data: { slide = [] },
+    },
+    { settings = {} },
+  ] = await Promise.all([response.json(), settingsRes.json()])
+  return {
+    props: {
+      slide,
+      settings,
+    },
+    revalidate: 60,
   }
 }
 

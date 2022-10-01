@@ -6,39 +6,32 @@ import Head from 'next/head'
 import { AiFillStar } from 'react-icons/ai'
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
 import FullPageSlider from '../../components/fullPageSlider'
-import { useEffect, useState } from 'react'
 
 export const getStaticProps = async () => {
-  try {
-    const [programsRes, slidesRes, settingsRes] = await Promise.all([
-      fetch('https://elnagahtravels.com/backend/public/api/sea_trips'),
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/slides?page=sea-trips'
-      ),
-      fetch('https://elnagahtravels.com/backend/public/api/settings'),
-    ])
+  const [programsRes, slidesRes, settingsRes] = await Promise.all([
+    fetch('https://backend.elnagahtravels.com/api/sea_trips'),
+    fetch('https://backend.elnagahtravels.com/api/slides?page=sea-trips'),
+    fetch('https://backend.elnagahtravels.com/api/settings'),
+  ])
 
-    const [
-      { programs = [] },
-      {
-        data: { slide = [] },
-      },
-      { settings = {} },
-    ] = await Promise.all([
-      programsRes.json(),
-      slidesRes.json(),
-      settingsRes.json(),
-    ])
-    return {
-      props: {
-        programs,
-        settings,
-        slide,
-      },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [
+    { programs = [] },
+    {
+      data: { slide = [] },
+    },
+    { settings = {} },
+  ] = await Promise.all([
+    programsRes.json(),
+    slidesRes.json(),
+    settingsRes.json(),
+  ])
+  return {
+    props: {
+      programs,
+      settings,
+      slide,
+    },
+    revalidate: 60,
   }
 }
 

@@ -16,35 +16,29 @@ import { GiRotaryPhone } from 'react-icons/gi'
 import { MdLocationOn } from 'react-icons/md'
 import { FaTiktok } from 'react-icons/fa'
 import ScrollDown from '../../components/scrollDown'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Snackbar from '../../components/snackbar'
 
 export const getStaticProps = async () => {
-  try {
-    const [dataRes, slideRes, settingsRes] = await Promise.all([
-      fetch('https://elnagahtravels.com/backend/public/api/design_program'),
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/slides?page=design-program'
-      ),
-      fetch('https://elnagahtravels.com/backend/public/api/settings'),
-    ])
-    const [
-      { hotels: data = {} },
-      {
-        data: { slide = [] },
-      },
-      { settings = {} },
-    ] = await Promise.all([dataRes.json(), slideRes.json(), settingsRes.json()])
-    return {
-      props: {
-        data,
-        slide,
-        settings,
-      },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [dataRes, slideRes, settingsRes] = await Promise.all([
+    fetch('https://backend.elnagahtravels.com/api/design_program'),
+    fetch('https://backend.elnagahtravels.com/api/slides?page=design-program'),
+    fetch('https://backend.elnagahtravels.com/api/settings'),
+  ])
+  const [
+    { hotels: data = {} },
+    {
+      data: { slide = [] },
+    },
+    { settings = {} },
+  ] = await Promise.all([dataRes.json(), slideRes.json(), settingsRes.json()])
+  return {
+    props: {
+      data,
+      slide,
+      settings,
+    },
+    revalidate: 60,
   }
 }
 

@@ -6,31 +6,27 @@ import Link from 'next/link'
 import Head from 'next/head'
 
 export const getStaticProps = async ({ params }) => {
-  try {
-    const [response, countriesRes] = await Promise.all([
-      fetch(
-        `https://elnagahtravels.com/backend/public/api/programs/categories?country_id=${params.place}`
-      ),
-      fetch(
-        `https://elnagahtravels.com/backend/public/api/countries?country_for=programs`
-      ),
-    ])
-    const [{ categories = [] }, { countries = [] }] = await Promise.all([
-      response.json(),
-      countriesRes.json(),
-    ])
-    return {
-      props: { countries, categories },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [response, countriesRes] = await Promise.all([
+    fetch(
+      `https://backend.elnagahtravels.com/api/programs/categories?country_id=${params.place}`
+    ),
+    fetch(
+      `https://backend.elnagahtravels.com/api/countries?country_for=programs`
+    ),
+  ])
+  const [{ categories = [] }, { countries = [] }] = await Promise.all([
+    response.json(),
+    countriesRes.json(),
+  ])
+  return {
+    props: { countries, categories },
+    revalidate: 60,
   }
 }
 
 export const getStaticPaths = async () => {
   const response = await fetch(
-    'https://elnagahtravels.com/backend/public/api/countries'
+    'https://backend.elnagahtravels.com/api/countries'
   )
   const { countries = [] } = await response.json()
   const countrySlugs = countries?.map((country) => country.name)

@@ -5,28 +5,22 @@ import SpecialCard from '../../components/special/specialCard'
 import FullPageSlider from '../../components/fullPageSlider'
 
 export const getStaticProps = async () => {
-  try {
-    const [slidesRes, offerRes] = await Promise.all([
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/slides?page=special_offers'
-      ),
-      fetch('https://elnagahtravels.com/backend/public/api/special_offers'),
-    ])
-    const [
-      {
-        data: { slide = [] },
-      },
-      { special_offers = [] },
-    ] = await Promise.all([slidesRes.json(), offerRes.json()])
-    return {
-      props: {
-        slide,
-        special_offers,
-      },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [slidesRes, offerRes] = await Promise.all([
+    fetch('https://backend.elnagahtravels.com/api/slides?page=special_offers'),
+    fetch('https://backend.elnagahtravels.com/api/special_offers'),
+  ])
+  const [
+    {
+      data: { slide = [] },
+    },
+    { special_offers = [] },
+  ] = await Promise.all([slidesRes.json(), offerRes.json()])
+  return {
+    props: {
+      slide,
+      special_offers,
+    },
+    revalidate: 60,
   }
 }
 

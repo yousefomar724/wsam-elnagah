@@ -23,55 +23,51 @@ import { useRef, useState } from 'react'
 import Snackbar from '../../../../../components/snackbar'
 
 export const getStaticProps = async ({ params }) => {
-  try {
-    // Get Progarams
-    const [response, settingsRes, countriesRes] = await Promise.all([
-      fetch(
-        `https://elnagahtravels.com/backend/public/api/programs_details/${params.details}`
-      ),
-      fetch(`https://elnagahtravels.com/backend/public/api/settings`),
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/countries?country_for=programs'
-      ),
+  // Get Progarams
+  const [response, settingsRes, countriesRes] = await Promise.all([
+    fetch(
+      `https://backend.elnagahtravels.com/api/programs_details/${params.details}`
+    ),
+    fetch(`https://backend.elnagahtravels.com/api/settings`),
+    fetch(
+      'https://backend.elnagahtravels.com/api/countries?country_for=programs'
+    ),
+  ])
+  const [{ program = {} }, { settings = {} }, { countries = [] }] =
+    await Promise.all([
+      response.json(),
+      settingsRes.json(),
+      countriesRes.json(),
     ])
-    const [{ program = {} }, { settings = {} }, { countries = [] }] =
-      await Promise.all([
-        response.json(),
-        settingsRes.json(),
-        countriesRes.json(),
-      ])
 
-    const progRes = await fetch(
-      `https://elnagahtravels.com/backend/public/api/programs?country_id=${params.place}&category_id=${params.categoryId}`
-    )
-    const { programs = [] } = await progRes.json()
-    return {
-      props: { program, programs, countries, settings },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const progRes = await fetch(
+    `https://backend.elnagahtravels.com/api/programs?country_id=${params.place}&category_id=${params.categoryId}`
+  )
+  const { programs = [] } = await progRes.json()
+  return {
+    props: { program, programs, countries, settings },
+    revalidate: 60,
   }
 }
 
 export const getStaticPaths = async () => {
   // Get Country Names
   const counRes = await fetch(
-    'https://elnagahtravels.com/backend/public/api/countries?country_for=programs'
+    'https://backend.elnagahtravels.com/api/countries?country_for=programs'
   )
   const { countries = [] } = await counRes.json()
   const countryIds = countries.map((country) => country.id)
 
   // Get Category Ids
   const catRes = await fetch(
-    'https://elnagahtravels.com/backend/public/api/categories'
+    'https://backend.elnagahtravels.com/api/categories'
   )
   const { categories = [] } = await catRes.json()
   const categoryIds = categories.map((cat) => cat.id)
 
   // Get Program Ids
   const progRes = await fetch(
-    `https://elnagahtravels.com/backend/public/api/programs?country_id=1&category_id=1`
+    `https://backend.elnagahtravels.com/api/programs?country_id=1&category_id=1`
   )
   const { programs = [] } = await progRes.json()
   const programIds = programs.map((prog) => prog.id)

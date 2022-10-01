@@ -6,27 +6,21 @@ import Head from 'next/head'
 import FullPageSlider from '../../components/fullPageSlider'
 
 export const getStaticProps = async () => {
-  try {
-    const [countryRes, slidesRes] = await Promise.all([
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/countries?country_for=programs'
-      ),
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/slides?page=programs'
-      ),
-    ])
-    const [
-      { countries = [] },
-      {
-        data: { slide = [] },
-      },
-    ] = await Promise.all([countryRes.json(), slidesRes.json()])
-    return {
-      props: { countries, slide },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const [countryRes, slidesRes] = await Promise.all([
+    fetch(
+      'https://backend.elnagahtravels.com/api/countries?country_for=programs'
+    ),
+    fetch('https://backend.elnagahtravels.com/api/slides?page=programs'),
+  ])
+  const [
+    { countries = [] },
+    {
+      data: { slide = [] },
+    },
+  ] = await Promise.all([countryRes.json(), slidesRes.json()])
+  return {
+    props: { countries, slide },
+    revalidate: 60,
   }
 }
 

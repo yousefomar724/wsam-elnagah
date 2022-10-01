@@ -13,14 +13,14 @@ import ScrollDown from '../../../../components/scrollDown'
 export const getStaticPaths = async () => {
   // Get Country Names
   const counRes = await fetch(
-    'https://elnagahtravels.com/backend/public/api/countries?country_for=programs'
+    'https://backend.elnagahtravels.com/api/countries?country_for=programs'
   )
   const { countries = [] } = await counRes.json()
   const countryIds = countries.map((country) => country.id)
 
   // Get Category Ids
   const catRes = await fetch(
-    'https://elnagahtravels.com/backend/public/api/categories'
+    'https://backend.elnagahtravels.com/api/categories'
   )
   const { categories = [] } = await catRes.json()
   const categoryIds = categories.map((cat) => cat.id)
@@ -45,30 +45,26 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }) => {
-  try {
-    const [countryRes, categoryRes, settingsRes] = await Promise.all([
-      fetch(
-        'https://elnagahtravels.com/backend/public/api/countries?country_for=programs'
-      ),
-      fetch('https://elnagahtravels.com/backend/public/api/categories'),
-      fetch('https://elnagahtravels.com/backend/public/api/settings'),
+  const [countryRes, categoryRes, settingsRes] = await Promise.all([
+    fetch(
+      'https://backend.elnagahtravels.com/api/countries?country_for=programs'
+    ),
+    fetch('https://backend.elnagahtravels.com/api/categories'),
+    fetch('https://backend.elnagahtravels.com/api/settings'),
+  ])
+  const [{ countries = [] }, { categories = [] }, { settings = {} }] =
+    await Promise.all([
+      countryRes.json(),
+      categoryRes.json(),
+      settingsRes.json(),
     ])
-    const [{ countries = [] }, { categories = [] }, { settings = {} }] =
-      await Promise.all([
-        countryRes.json(),
-        categoryRes.json(),
-        settingsRes.json(),
-      ])
-    const response = await fetch(
-      `https://elnagahtravels.com/backend/public/api/programs?country_id=${params.place}&category_id=${params.categoryId}`
-    )
-    const { programs = [] } = await response.json()
-    return {
-      props: { countries, settings, categories, programs },
-      revalidate: 60,
-    }
-  } catch (error) {
-    console.log(error)
+  const response = await fetch(
+    `https://backend.elnagahtravels.com/api/programs?country_id=${params.place}&category_id=${params.categoryId}`
+  )
+  const { programs = [] } = await response.json()
+  return {
+    props: { countries, settings, categories, programs },
+    revalidate: 60,
   }
 }
 
