@@ -20,6 +20,7 @@ export const getStaticProps = async () => {
       slide,
       special_offers,
     },
+    revalidate: 60,
   }
 }
 

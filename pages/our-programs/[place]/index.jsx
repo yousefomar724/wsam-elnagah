@@ -14,7 +14,7 @@ export const getStaticPaths = async () => {
   const paths = countrySlugs?.map((slug) => ({ params: { place: slug } }))
   return {
     paths,
-    fallback: 'blocking',
+    fallback: false,
   }
 }
 

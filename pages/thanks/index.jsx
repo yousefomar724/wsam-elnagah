@@ -18,6 +18,7 @@ export const getStaticProps = async () => {
   ] = await Promise.all([reviewsRes.json(), slidesRes.json()])
   return {
     props: { reviews, slide },
+    revalidate: 60,
   }
 }
 

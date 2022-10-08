@@ -38,12 +38,12 @@ const NewPrograms = ({ programs, settings }) => {
                 </span>
                 <span>
                   <MdLocationOn />
-                  {program.country.name}
+                  {program?.country?.name}
                 </span>
               </div>
               <div className={styles.newPrograms__heading}>
                 <Link
-                  href={`/our-programs/${program.country.id}/${program.category.id}/${program.id}`}
+                  href={`/our-programs/${program.country?.id}/${program.category.id}/${program.id}`}
                 >
                   <a>
                     <h3 className={styles.newPrograms__card__title}>
@@ -67,7 +67,7 @@ const NewPrograms = ({ programs, settings }) => {
                 <AnimatedBtn
                   text='تفاصيل العرض'
                   textColor='#222'
-                  url={`/our-programs/${program.country.id}/${program.category.id}/${program.id}`}
+                  url={`/our-programs/${program.country?.id}/${program.category.id}/${program.id}`}
                 />
                 <AnimatedBtn
                   text='حجز العرض'

@@ -10,12 +10,10 @@
   },
   "dependencies": {
     "framer-motion": "^6.5.1",
-    "google-map-react": "^2.2.0",
     "next": "12.2.3",
     "nextjs-progressbar": "^0.0.14",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-gtm-module": "^2.0.11",
     "react-icons": "^4.4.0",
     "swiper": "^8.3.1"
   },
