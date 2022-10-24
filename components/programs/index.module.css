@@ -1,5 +1,5 @@
 .programs {
-  background-image: url('/visionbg.webp');
+  background-image: url("/visionbg.webp");
   background-repeat: no-repeat;
   padding: 6rem 4rem 6rem 0;
   color: white;
@@ -19,7 +19,7 @@
 }
 .programs__slider {
   flex: 3;
-  position: static;
+  position: static !important;
   height: 500px;
   padding-top: 10px;
 }
@@ -152,6 +152,14 @@
   width: 300px;
   cursor: pointer;
 }
+.card__front > span {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8),
+    transparent
+  ) !important;
+  border-radius: 20px;
+}
 .sale {
   position: absolute;
   top: -10px;
@@ -164,7 +172,7 @@
 }
 .sale::before,
 .sale::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 10px;
   height: 10px;
@@ -191,8 +199,9 @@
   gap: 0.5rem;
   top: 40px;
   left: -30px;
+  z-index: 1;
 }
-.sale .discount__text {
+.discount__text {
   font-size: 1.1rem;
   margin: 0;
   color: var(--second-clr);
@@ -244,6 +253,7 @@
   align-items: center;
   width: 100%;
   padding: 1rem;
+  z-index: 1;
 }
 .card__front__title {
   font-size: 1.5rem;
@@ -287,7 +297,7 @@
   align-self: flex-end;
 }
 .card__back__title {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -335,7 +345,7 @@
   width: 100%;
 }
 .offer::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -0.5rem;
   right: 0;
@@ -345,7 +355,7 @@
   background-color: lightgray;
 }
 .offer::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;

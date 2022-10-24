@@ -1,11 +1,11 @@
-import styles from './index.module.css'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation } from 'swiper'
-import SpecialCard from './specialCard'
-import { useEffect, useRef } from 'react'
-import Link from 'next/link'
-import 'swiper/css'
-import 'swiper/css/navigation'
+import styles from "./index.module.css"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Navigation } from "swiper"
+import SpecialCard from "./specialCard"
+import { useRef } from "react"
+import Link from "next/link"
+import "swiper/css"
+import "swiper/css/navigation"
 
 const Special = ({ data, settings }) => {
   const swiperPrevRef = useRef(null)
@@ -15,7 +15,7 @@ const Special = ({ data, settings }) => {
       <h3 className={styles.news__title}>العروض المميزة</h3>
       {data.length > 0 && (
         <Swiper
-          slidesPerView={'auto'}
+          slidesPerView={"auto"}
           centeredSlides={true}
           spaceBetween={20}
           breakpoints={{
@@ -47,25 +47,25 @@ const Special = ({ data, settings }) => {
             <SwiperSlide
               key={item?.id}
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                flexShrink: 'initial',
+                display: "flex",
+                justifyContent: "center",
+                flexShrink: "initial",
               }}
             >
               <SpecialCard item={item} settings={settings} />
             </SwiperSlide>
           ))}
           <div className={styles.swiper__prev} ref={swiperPrevRef}>
-            <img src='/prev-arrow-gray.svg' alt='' />
+            <img src="/prev-arrow-gray.svg" alt="" />
             Prev
           </div>
           <div className={styles.swiper__next} ref={swiperNextRef}>
-            <img src='/next-arrow-gray.svg' alt='' />
+            <img src="/next-arrow-gray.svg" alt="" />
             Next
           </div>
         </Swiper>
       )}
-      <Link href='/special-offers'>
+      <Link href="/special-offers">
         <a className={styles.view__all}>عرض الكل</a>
       </Link>
     </div>

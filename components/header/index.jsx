@@ -1,19 +1,19 @@
-import { useRouter } from 'next/router'
-import { memo, useEffect, useState } from 'react'
-import styles from './index.module.css'
-import Image from 'next/image'
-import { GiRotaryPhone } from 'react-icons/gi'
-import { TbGridDots } from 'react-icons/tb'
-import { IoMdClose } from 'react-icons/io'
-import { AiFillMobile } from 'react-icons/ai'
+import { useRouter } from "next/router"
+import { memo, useEffect, useState } from "react"
+import styles from "./index.module.css"
+import Image from "next/image"
+import { GiRotaryPhone } from "react-icons/gi"
+import { TbGridDots } from "react-icons/tb"
+import { IoMdClose } from "react-icons/io"
+import { AiFillMobile } from "react-icons/ai"
 import {
   BsArrowLeft,
   BsSearch,
   BsWhatsapp,
   BsEnvelopeFill,
-} from 'react-icons/bs'
-import Menu from './menu'
-import Link from 'next/link'
+} from "react-icons/bs"
+import Menu from "./menu"
+import Link from "next/link"
 
 const Header = ({ settings, countries }) => {
   const router = useRouter()
@@ -22,14 +22,14 @@ const Header = ({ settings, countries }) => {
   const [isScrollTop, setIsScrollTop] = useState(false) // to hide on scroll down, show on scroll up
   const [showMenu, setShowMenu] = useState(false) // to hide/show menu
   const [isSearch, setIsSearch] = useState(false) // to hide/show search page
-  const [response, setResponse] = useState('')
-  const [searchTerm, setSearchTerm] = useState('')
+  const [response, setResponse] = useState("")
+  const [searchTerm, setSearchTerm] = useState("")
 
   // Show when scroll Up, Hide when scroll Down
   useEffect(() => {
     let lastScrollTop = window.scrollY
     window.addEventListener(
-      'scroll',
+      "scroll",
       () => {
         if (lastScrollTop < window.scrollY) {
           setIsScrollTop(true)
@@ -42,7 +42,7 @@ const Header = ({ settings, countries }) => {
     )
     return () =>
       removeEventListener(
-        'scroll',
+        "scroll",
         () => {
           if (lastScrollTop < window.scrollY) {
             setIsScrollTop(true)
@@ -62,75 +62,36 @@ const Header = ({ settings, countries }) => {
       countries?.find(({ name }) => name === searchTerm)?.name !== undefined
     ) {
       router.push(`/our-programs/${searchTerm}`)
-      setSearchTerm('')
-      setResponse('')
+      setSearchTerm("")
+      setResponse("")
       setIsSearch(false)
     } else {
-      setResponse(' لا توجد نتائج')
+      setResponse(" لا توجد نتائج")
     }
   }
   return (
     <header
-      className={`${styles.header} ${showHeader ? styles.active : ''} ${
-        isScrollTop ? styles.hide : ''
+      className={`${styles.header} ${showHeader ? styles.active : ""} ${
+        isScrollTop ? styles.hide : ""
       }`}
     >
       <nav className={styles.nav}>
         {/* Logo */}
-        <Link href='/'>
+        <Link href="/">
           <a>
             {settings?.logo && (
               <Image
                 src={settings?.logo}
-                alt='logo'
+                alt="logo"
                 width={102}
                 height={70}
-                layout='intrinsic'
+                layout="intrinsic"
                 priority={true}
                 className={styles.header__logo}
               />
             )}
           </a>
         </Link>
-
-        {/* Header Icons */}
-        {settings !== {} && (
-          <div className={styles.header__icons}>
-            <a
-              href={`tel:${settings?.mobile}`}
-              target='_blank'
-              rel='noreferrer'
-              className={styles.mobile}
-            >
-              <AiFillMobile title='تواصل معنا عبر الجوال' />
-            </a>
-            <a
-              href={`tel:${settings?.phone}`}
-              target='_blank'
-              rel='noreferrer'
-              className={styles.phone}
-            >
-              <GiRotaryPhone title='تواصل معنا عبر الهاتف الارضي' />
-            </a>
-            <a
-              href={`mailto:${settings?.email}`}
-              target='_blank'
-              rel='noreferrer'
-              className={styles.mail}
-            >
-              <BsEnvelopeFill title='تواصل معنا عبر البريد الالكتروني' />
-            </a>
-            <a
-              href={`https://api.whatsapp.com/send?phone=${settings?.whatsup}`}
-              target='_blank'
-              rel='noreferrer'
-              className={styles.whats}
-            >
-              <BsWhatsapp title='تواصل معنا عبر الواتساب' />
-            </a>
-          </div>
-        )}
-
         {/* Menu */}
         <Menu
           setIsScrollTop={setIsScrollTop}
@@ -154,16 +115,16 @@ const Header = ({ settings, countries }) => {
             className={styles.search__form}
           >
             <input
-              type='text'
-              placeholder='البحث'
+              type="text"
+              placeholder="البحث"
               value={searchTerm}
               onChange={(event) => {
                 setSearchTerm(event.target.value)
-                setResponse('')
+                setResponse("")
               }}
               className={styles.search__input}
             />
-            <button type='submit' className={styles.search__btn}>
+            <button type="submit" className={styles.search__btn}>
               ابحث <BsArrowLeft />
             </button>
           </form>
@@ -172,7 +133,7 @@ const Header = ({ settings, countries }) => {
               className={styles.search__close}
               onClick={() => {
                 setIsSearch(false)
-                setResponse('')
+                setResponse("")
               }}
             >
               <IoMdClose />
@@ -188,10 +149,10 @@ const Header = ({ settings, countries }) => {
             {settings?.logo && (
               <Image
                 src={settings?.logo}
-                alt='logo'
+                alt="logo"
                 width={102}
                 height={70}
-                layout='intrinsic'
+                layout="intrinsic"
               />
             )}
           </div>
@@ -213,7 +174,7 @@ const Header = ({ settings, countries }) => {
                 </div>
               ))}
           </div>
-          <h2 style={{ color: 'black', zIndex: 4 }}>{response}</h2>
+          <h2 style={{ color: "black", zIndex: 4 }}>{response}</h2>
         </div>
 
         {/* Header End */}
@@ -226,7 +187,7 @@ const Header = ({ settings, countries }) => {
           </span>
 
           <span
-            id='menuBtn'
+            id="menuBtn"
             className={styles.header__menu__btn}
             onClick={() => setShowMenu(true)}
           >
